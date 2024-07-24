@@ -2,7 +2,7 @@ apiVersion: v2
 name: keydb
 description: A Helm chart for KeyDB multimaster setup
 type: application
-version: 0.48.1
+version: 0.48.2
 keywords:
   - keydb
   - redis
@@ -21,4 +21,4 @@ sources:
   - https://github.com/finkinfridom/charts
   - https://github.com/JohnSully/KeyDB
 icon: https://enapter.github.io/charts/keydb.png
-appVersion: 6.3.2
+appVersion: 6.3.4
