@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "keydb/**"
+  workflow_dispatch:
 
 jobs:
   release:
@@ -22,7 +23,7 @@ jobs:
 
       - name: Package Helm charts
         run: |
-          helm package keydb/* --destination charts
+          helm package ./keydb --destination charts
 
       - name: Create Helm repository index
         run: |
