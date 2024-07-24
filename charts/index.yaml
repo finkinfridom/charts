@@ -2,8 +2,36 @@ apiVersion: v1
 entries:
   keydb:
   - apiVersion: v2
+    appVersion: 6.3.4
+    created: "2024-07-24T15:15:15.253701708Z"
+    description: A Helm chart for KeyDB multimaster setup
+    digest: f4af81df39c0aa83afbfb5afdb4c1d27b474374c8fa4e77da18e31abfc3e4daf
+    home: https://keydb.dev
+    icon: https://enapter.github.io/charts/keydb.png
+    keywords:
+    - keydb
+    - redis
+    - keyvalue
+    - database
+    - multimaster
+    - HA
+    - high-availability
+    maintainers:
+    - email: a.maghini@gmail.com
+      name: finkinfridom
+      url: https://github.com/finkinfridom
+    name: keydb
+    sources:
+    - https://github.com/Enapter/charts
+    - https://github.com/finkinfridom/charts
+    - https://github.com/JohnSully/KeyDB
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/finkinfridom/charts/main/charts/keydb-0.48.2.tgz
+    version: 0.48.2
+  - apiVersion: v2
     appVersion: 6.3.2
-    created: "2024-07-24T16:55:40.855557+02:00"
+    created: "2024-07-24T15:15:15.251861649Z"
     description: A Helm chart for KeyDB multimaster setup
     digest: 9e066c786a706f1e9aeb41f83ce222cec0f303d58e223fffa2b4bd232ea783c9
     home: https://keydb.dev
@@ -27,6 +55,6 @@ entries:
     - https://github.com/JohnSully/KeyDB
     type: application
     urls:
-    - https://raw.githubusercontent.com/finknifridom/charts/main/charts/keydb-0.48.1.tgz
+    - https://raw.githubusercontent.com/finkinfridom/charts/main/charts/keydb-0.48.1.tgz
     version: 0.48.1
-generated: "2024-07-24T16:55:40.854805+02:00"
+generated: "2024-07-24T15:15:15.250776573Z"
