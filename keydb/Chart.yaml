@@ -2,22 +2,23 @@ apiVersion: v2
 name: keydb
 description: A Helm chart for KeyDB multimaster setup
 type: application
-version: 0.48.0
+version: 0.48.1
 keywords:
-- keydb
-- redis
-- keyvalue
-- database
-- multimaster
-- HA
-- high-availability
+  - keydb
+  - redis
+  - keyvalue
+  - database
+  - multimaster
+  - HA
+  - high-availability
 home: https://keydb.dev
 maintainers:
-- email: avoronkov@enapter.com
-  name: Antiarchitect
-  url: https://github.com/Antiarchitect
+  - email: a.maghini@gmail.com
+    name: finkinfridom
+    url: https://github.com/finkinfridom
 sources:
-- https://github.com/Enapter/charts
-- https://github.com/JohnSully/KeyDB
+  - https://github.com/Enapter/charts
+  - https://github.com/finkinfridom/charts
+  - https://github.com/JohnSully/KeyDB
 icon: https://enapter.github.io/charts/keydb.png
 appVersion: 6.3.2

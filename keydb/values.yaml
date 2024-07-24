@@ -2,7 +2,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 imageRepository: eqalpha/keydb
-imageTag: x86_64_v6.3.2
+imageTag: x86_64_v6.3.4
 imagePullPolicy: IfNotPresent
 imagePullSecrets: []
 
@@ -25,7 +25,8 @@ appendonly: "no"
 
 annotations: {}
 
-configExtraArgs: []
+configExtraArgs:
+  []
   # - somesimple: "argument"
   # - client-output-buffer-limit: ["normal", "0", "0", "0"]
   # - client-output-buffer-limit: ["replica", "268435456", "67108864", "60"]
@@ -33,13 +34,15 @@ configExtraArgs: []
 
 podAnnotations: {}
 
-tolerations: {}
+tolerations:
+  {}
   # - effect: NoSchedule
   #   key: key
   #   operator: Equal
   #   value: value
 
-nodeSelector: {}
+nodeSelector:
+  {}
   # topology.kubernetes.io/region: some-region
 
 topologySpreadConstraints: []
@@ -54,21 +57,22 @@ topologySpreadConstraints: []
 affinity:
   podAntiAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
-    - weight: 100
-      podAffinityTerm:
-        labelSelector:
-          matchExpressions:
-          - key: app.kubernetes.io/name
-            operator: In
-            values:
-            - '{{ include "keydb.name" . }}'
-          - key: app.kubernetes.io/instance
-            operator: In
-            values:
-            - '{{ .Release.Name }}'
-        topologyKey: "kubernetes.io/hostname"
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - '{{ include "keydb.name" . }}'
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - "{{ .Release.Name }}"
+          topologyKey: "kubernetes.io/hostname"
 
-additionalAffinities: {}
+additionalAffinities:
+  {}
   # nodeAffinity:
   #   requiredDuringSchedulingIgnoredDuringExecution:
   #     nodeSelectorTerms:
@@ -137,7 +141,8 @@ startupProbe:
   failureThreshold: 24
 
 # Lifecycle Hooks
-lifecycle: {}
+lifecycle:
+  {}
   # preStop:
   #   exec:
   #     command:
@@ -149,7 +154,8 @@ persistentVolume:
   enabled: true
   accessModes:
     - ReadWriteOnce
-  selector: {}
+  selector:
+    {}
     # matchLabels:
     #   release: "stable"
     # matchExpressions:
@@ -171,7 +177,8 @@ resources: {}
 
 # Please read https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/#enabling-unsafe-sysctls
 # before sysctls setup
-securityContext: {}
+securityContext:
+  {}
   # sysctls:
   # - name: net.core.somaxconn
   #   value: "512"
@@ -259,7 +266,8 @@ exporter:
   securityContext: {}
 
   # Additional args for redis exporter
-  extraArgs: []
+  extraArgs:
+    []
     # - somesimple: "argument"
     # - client-output-buffer-limit: ["normal", "0", "0", "0"]
     # - client-output-buffer-limit: ["replica", "268435456", "67108864", "60"]
