@@ -5,20 +5,23 @@
 ## TL;DR;
 
 ```bash
-helm repo add enapter https://enapter.github.io/charts/
-helm install keydb enapter/keydb
+helm repo add finkinfridom https://raw.githubusercontent.com/finkinfridom/charts/main/charts/
+helm install keydb finkinfridom/keydb
 ```
 
 ## Introduction
 
 This chart bootstraps a [KeyDB](https://keydb.dev) highly available multi-master statefulset in a [Kubernetes](http://kubernetes.io) cluster using the Helm package manager.
 
+## 0.48.2
+
+Updated appVersion to 6.3.4
+
 ## 0.40.1 Upgrade notice
 
 As the chart is not yet production ready (0.x) backward incompatible changes can be introduced in minor releases.
 
 `exporter.pullPolicy` is deprecated in favor of `exporter.imagePullPolicy`
-
 
 ## 0.38.0 Upgrade notice
 
@@ -92,90 +95,94 @@ helm install keydb enapter/keydb
 
 The following table lists the configurable parameters of the KeyDB chart and their default values.
 
-| Parameter                       | Description                                        | Default                                   |
-|:--------------------------------|:---------------------------------------------------|:------------------------------------------|
-| `imageRepository`               | KeyDB docker image                                 | `eqalpha/keydb`                           |
-| `imageTag`                      | KeyDB docker image tag                             | `x86_64_v6.3.2`                           |
-| `imagePullPolicy`               | K8s imagePullPolicy                                | `IfNotPresent`                            |
-| `imagePullSecrets`              | KeyDB Pod imagePullSecrets                         | `[]`                                      |
-| `nodes`                         | Number of KeyDB master pods                        | `3`                                       |
-| `password`                      | If enabled KeyDB servers are password-protected    | `""`                                      |
-| `existingSecret`                | If enabled password is taken from secret           | `""`                                      |
-| `existingSecretPasswordKey`     | Secret key name.                                   | `"password"`                              |
-| `port`                          | KeyDB service port clients connect to              | `6379`                                    |
-| `portName`                      | KeyDB service port name in the Service spec        | `server`                                  |
-| `threads`                       | KeyDB server-threads per node                      | `2`                                       |
-| `multiMaster`                   | KeyDB multi-master setup                           | `yes`                                     |
-| `activeReplicas`                | KeyDB active replication setup                     | `yes`                                     |
-| `protectedMode`                 | KeyDB protection mode                              | `no`                                      |
-| `appendonly`                    | KeyDB appendonly setting                           | `no`                                      |
-| `configExtraArgs`               | Additional configuration arguments for KeyDB       | `[]`                                      |
-| `annotations`                   | KeyDB StatefulSet annotations                      | `{}`                                      |
-| `podAnnotations`                | KeyDB pods annotations                             | `{}`                                      |
-| `tolerations`                   | KeyDB tolerations setting                          | `{}`                                      |
-| `nodeSelector`                  | KeyDB nodeSelector setting                         | `{}`                                      |
-| `topologySpreadConstraints`     | KeyDB topologySpreadConstraints setting            | `[]`                                      |
-| `affinity`                      | StatefulSet Affinity rules                         | Look values.yaml                          |
-| `extraInitContainers`           | Additional init containers for StatefulSet         | `[]`                                      |
-| `extraContainers`               | Additional sidecar containers for StatefulSet      | `[]`                                      |
-| `extraVolumes`                  | Additional volumes for init and sidecar containers | `[]`                                      |
-| `livenessProbe.custom`          | Custom LivenessProbe for KeyDB pods                | `{}`                                      |
-| `readinessProbe.custom`         | Custom ReadinessProbe for KeyDB pods               | `{}`                                      |
-| `readinessProbeRandomUuid`      | Random UUIDv4 for readiness GET probe              | `90f717dd-0e68-43b8-9363-fddaad00d6c9`    |
-| `startupProbe.custom`           | Custom StartupProbe for KeyDB pods                 | `{}`                                      |
-| `persistentVolume.enabled`      | Should PVC be created via volumeClaimTemplates     | `true`                                    |
-| `persistentVolume.accessModes`  | Volume access modes                                | `[ReadWriteOnce]`                         |
-| `persistentVolume.selector`     | PVC selector. (In order to match existing PVs)     | `{}`                                      |
-| `persistentVolume.size`         | Size of the volume                                 | `1Gi`                                     |
-| `persistentVolume.storageClass` | StorageClassName for volume                        | ``                                        |
-| `podDisruptionBudget`           | podDisruptionBudget for KeyDB pods                 | Look values.yaml                          |
-| `resources`                     | Resources for KeyDB containers                     | `{}`                                      |
-| `scripts.enabled`               | Turn on health util scripts                        | `false`                                   |
-| `scripts.cleanupCoredumps`      | Coredumps cleanup scripts                          | Look values.yaml                          |
-| `scripts.cleanupTempfiles`      | Tempfiles cleanup scripts                          | Look values.yaml                          |
-| `scripts.securityContext`       | SecurityContext for scripts container              | `{}`                                      |
-| `keydb.securityContext`         | SecurityContext for KeyDB container                | `{}`                                      |
-| `securityContext`               | SecurityContext for KeyDB pods                     | `{}`                                      |
-| `service.annotations`           | Service annotations                                | `{}`                                      |
-| `service.appProtocol.enabled`   | Turn on appProtocol fields in port specs           | `false`                                   |
-| `loadBalancer.enabled`          | Create LoadBalancer service                        | `false`                                   |
-| `loadBalancer.annotations`      | Annotations for LB                                 | `{}`                                      |
-| `loadBalancer.extraSpec`        | Additional spec for LB                             | `{}`                                      |
-| `serviceAccount.enabled`        | Use a dedicated ServiceAccount (SA)                | `false`                                   |
-| `serviceAccount.create`         | Create the SA (rather than use an existing one)    | `true`                                    |
-| `serviceAccount.name`           | Set the name of an existing SA or override created | ``                                        |
-| `serviceAccount.extraSpec`      | Additional spec for the created SA                 | `{}`                                      |
-| `serviceMonitor.enabled`        | Prometheus operator ServiceMonitor                 | `false`                                   |
-| `serviceMonitor.labels`         | Additional labels for ServiceMonitor               | `{}`                                      |
-| `serviceMonitor.annotations`    | Additional annotations for ServiceMonitor          | `{}`                                      |
-| `serviceMonitor.interval`       | ServiceMonitor scrape interval                     | `30s`                                     |
-| `serviceMonitor.scrapeTimeout`  | ServiceMonitor scrape timeout                      | `nil`                                     |
-| `exporter.enabled`              | Prometheus Exporter sidecar contaner               | `false`                                   |
-| `exporter.imageRepository`      | Exporter Image                                     | `oliver006/redis_exporter`                |
-| `exporter.imageTag`             | Exporter Image Tag                                 | `v1.48.0-alpine`                          |
-| `exporter.pullPolicy`           | Exporter imagePullPolicy                           | `IfNotPresent`                            |
-| `exporter.port`                 | `prometheus.io/port`                               | `9121`                                    |
-| `exporter.portName`             | Exporter service port name in the Service spec     | `redis-exporter`                          |
-| `exporter.scrapePath`           | `prometheus.io/path`                               | `/metrics`                                |
-| `exporter.livenessProbe`        | LivenessProbe for sidecar Prometheus exporter      | Look values.yaml                          |
-| `exporter.readinessProbe`       | ReadinessProbe for sidecar Prometheus exporter     | Look values.yaml                          |
-| `exporter.startupProbe`         | StartupProbe for sidecar Prometheus exporter       | Look values.yaml                          |
-| `exporter.resources`            | Resources for sidecar Prometheus container         | `{}`                                      |
-| `exporter.securityContext`      | SecurityContext for Prometheus exporter container  | `{}`                                      |
-| `exporter.extraArgs`            | Additional arguments for exporter                  | `[]`                                      |
+| Parameter                       | Description                                        | Default                                |
+| :------------------------------ | :------------------------------------------------- | :------------------------------------- |
+| `imageRepository`               | KeyDB docker image                                 | `eqalpha/keydb`                        |
+| `imageTag`                      | KeyDB docker image tag                             | `x86_64_v6.3.2`                        |
+| `imagePullPolicy`               | K8s imagePullPolicy                                | `IfNotPresent`                         |
+| `imagePullSecrets`              | KeyDB Pod imagePullSecrets                         | `[]`                                   |
+| `nodes`                         | Number of KeyDB master pods                        | `3`                                    |
+| `password`                      | If enabled KeyDB servers are password-protected    | `""`                                   |
+| `existingSecret`                | If enabled password is taken from secret           | `""`                                   |
+| `existingSecretPasswordKey`     | Secret key name.                                   | `"password"`                           |
+| `port`                          | KeyDB service port clients connect to              | `6379`                                 |
+| `portName`                      | KeyDB service port name in the Service spec        | `server`                               |
+| `threads`                       | KeyDB server-threads per node                      | `2`                                    |
+| `multiMaster`                   | KeyDB multi-master setup                           | `yes`                                  |
+| `activeReplicas`                | KeyDB active replication setup                     | `yes`                                  |
+| `protectedMode`                 | KeyDB protection mode                              | `no`                                   |
+| `appendonly`                    | KeyDB appendonly setting                           | `no`                                   |
+| `configExtraArgs`               | Additional configuration arguments for KeyDB       | `[]`                                   |
+| `annotations`                   | KeyDB StatefulSet annotations                      | `{}`                                   |
+| `podAnnotations`                | KeyDB pods annotations                             | `{}`                                   |
+| `tolerations`                   | KeyDB tolerations setting                          | `{}`                                   |
+| `nodeSelector`                  | KeyDB nodeSelector setting                         | `{}`                                   |
+| `topologySpreadConstraints`     | KeyDB topologySpreadConstraints setting            | `[]`                                   |
+| `affinity`                      | StatefulSet Affinity rules                         | Look values.yaml                       |
+| `extraInitContainers`           | Additional init containers for StatefulSet         | `[]`                                   |
+| `extraContainers`               | Additional sidecar containers for StatefulSet      | `[]`                                   |
+| `extraVolumes`                  | Additional volumes for init and sidecar containers | `[]`                                   |
+| `livenessProbe.custom`          | Custom LivenessProbe for KeyDB pods                | `{}`                                   |
+| `readinessProbe.custom`         | Custom ReadinessProbe for KeyDB pods               | `{}`                                   |
+| `readinessProbeRandomUuid`      | Random UUIDv4 for readiness GET probe              | `90f717dd-0e68-43b8-9363-fddaad00d6c9` |
+| `startupProbe.custom`           | Custom StartupProbe for KeyDB pods                 | `{}`                                   |
+| `persistentVolume.enabled`      | Should PVC be created via volumeClaimTemplates     | `true`                                 |
+| `persistentVolume.accessModes`  | Volume access modes                                | `[ReadWriteOnce]`                      |
+| `persistentVolume.selector`     | PVC selector. (In order to match existing PVs)     | `{}`                                   |
+| `persistentVolume.size`         | Size of the volume                                 | `1Gi`                                  |
+| `persistentVolume.storageClass` | StorageClassName for volume                        | ``                                     |
+| `podDisruptionBudget`           | podDisruptionBudget for KeyDB pods                 | Look values.yaml                       |
+| `resources`                     | Resources for KeyDB containers                     | `{}`                                   |
+| `scripts.enabled`               | Turn on health util scripts                        | `false`                                |
+| `scripts.cleanupCoredumps`      | Coredumps cleanup scripts                          | Look values.yaml                       |
+| `scripts.cleanupTempfiles`      | Tempfiles cleanup scripts                          | Look values.yaml                       |
+| `scripts.securityContext`       | SecurityContext for scripts container              | `{}`                                   |
+| `keydb.securityContext`         | SecurityContext for KeyDB container                | `{}`                                   |
+| `securityContext`               | SecurityContext for KeyDB pods                     | `{}`                                   |
+| `service.annotations`           | Service annotations                                | `{}`                                   |
+| `service.appProtocol.enabled`   | Turn on appProtocol fields in port specs           | `false`                                |
+| `loadBalancer.enabled`          | Create LoadBalancer service                        | `false`                                |
+| `loadBalancer.annotations`      | Annotations for LB                                 | `{}`                                   |
+| `loadBalancer.extraSpec`        | Additional spec for LB                             | `{}`                                   |
+| `serviceAccount.enabled`        | Use a dedicated ServiceAccount (SA)                | `false`                                |
+| `serviceAccount.create`         | Create the SA (rather than use an existing one)    | `true`                                 |
+| `serviceAccount.name`           | Set the name of an existing SA or override created | ``                                     |
+| `serviceAccount.extraSpec`      | Additional spec for the created SA                 | `{}`                                   |
+| `serviceMonitor.enabled`        | Prometheus operator ServiceMonitor                 | `false`                                |
+| `serviceMonitor.labels`         | Additional labels for ServiceMonitor               | `{}`                                   |
+| `serviceMonitor.annotations`    | Additional annotations for ServiceMonitor          | `{}`                                   |
+| `serviceMonitor.interval`       | ServiceMonitor scrape interval                     | `30s`                                  |
+| `serviceMonitor.scrapeTimeout`  | ServiceMonitor scrape timeout                      | `nil`                                  |
+| `exporter.enabled`              | Prometheus Exporter sidecar contaner               | `false`                                |
+| `exporter.imageRepository`      | Exporter Image                                     | `oliver006/redis_exporter`             |
+| `exporter.imageTag`             | Exporter Image Tag                                 | `v1.48.0-alpine`                       |
+| `exporter.pullPolicy`           | Exporter imagePullPolicy                           | `IfNotPresent`                         |
+| `exporter.port`                 | `prometheus.io/port`                               | `9121`                                 |
+| `exporter.portName`             | Exporter service port name in the Service spec     | `redis-exporter`                       |
+| `exporter.scrapePath`           | `prometheus.io/path`                               | `/metrics`                             |
+| `exporter.livenessProbe`        | LivenessProbe for sidecar Prometheus exporter      | Look values.yaml                       |
+| `exporter.readinessProbe`       | ReadinessProbe for sidecar Prometheus exporter     | Look values.yaml                       |
+| `exporter.startupProbe`         | StartupProbe for sidecar Prometheus exporter       | Look values.yaml                       |
+| `exporter.resources`            | Resources for sidecar Prometheus container         | `{}`                                   |
+| `exporter.securityContext`      | SecurityContext for Prometheus exporter container  | `{}`                                   |
+| `exporter.extraArgs`            | Additional arguments for exporter                  | `[]`                                   |
 
 ## Using existingSecret
 
 When definining existingSecret (by default is "") password value is ignored. Password is taken from that secret, instead of being provided as plain text under values.yaml file. \
-Secret key must be `existingSecretPasswordKey` (*password* by default). \
-Example of of such secret: 
+Secret key must be `existingSecretPasswordKey` (_password_ by default). \
+Example of of such secret:
+
 ```bash
 kubectl create secret generic keydb-password --from-literal=password=KEYDB_PASSWORD
 ```
+
 Definition of existingSecret in that case:
+
 ```yaml
 password: ""
 existingSecret: keydb-password
 existingSecretPasswordKey: password-key-in-secret-file
 ```
+
 It is important to use only one way of providing passwords: via plain text under values.yaml or using already existing secret.
