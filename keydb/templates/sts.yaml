@@ -263,6 +263,9 @@ spec:
           {{- end }}
         {{- end }}
       {{- end }}
+      {{- if .Values.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      {{- end }}
       volumes:
       - name: health
         configMap:
