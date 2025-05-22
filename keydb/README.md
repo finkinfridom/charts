@@ -13,6 +13,10 @@ helm install keydb finkinfridom/keydb
 
 This chart bootstraps a [KeyDB](https://keydb.dev) highly available multi-master statefulset in a [Kubernetes](http://kubernetes.io) cluster using the Helm package manager.
 
+## 0.48.4
+
+Support for `terminationGracePeriodSeconds` configuration added to the KeyDB StatefulSet.
+
 ## 0.48.2
 
 Updated appVersion to 6.3.4

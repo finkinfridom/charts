@@ -150,6 +150,9 @@ lifecycle:
   #       - -c
   #       - "sleep 15; kill 1"
 
+# Default terminationGracePeriodSeconds in Kubernetes is 30 seconds
+terminationGracePeriodSeconds: 30
+
 persistentVolume:
   enabled: true
   accessModes:
